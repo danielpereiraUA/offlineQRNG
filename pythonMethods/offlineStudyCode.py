@@ -28,22 +28,16 @@ for i in range(2**nGray):
     for j in range(nGray):
         grayCodeValue[i]=grayCodeValue[i]+2*int(grayCode[i][j])-1
 
-plt.plot(amplitude)
-plt.show()
-
-print(grayCode)
-print(grayCodeValue)
-
-# # Bin limit calculator
-# binLimits = np.zeros([2**nGray-1])
-# N=2**(nGray-1)
-# if nGray==1:
-#     binLimits = meanAmplitude
-# else:
-#     for i in range(N):
-#         binLimits[N-i-1] = meanAmplitude + np.sqrt(2)*stdAmplitude*erfinv(-float(i)/N)
-#         if i!=0:
-#             binLimits[N+i-1] = meanAmplitude + np.sqrt(2)*stdAmplitude*erfinv(float(i)/N)
+# Bin limit calculator
+binLimits = np.zeros([2**nGray-1])
+N=2**(nGray-1)
+if nGray==1:
+    binLimits = meanAmplitude
+else:
+    for i in range(N):
+        binLimits[N-i-1] = meanAmplitude + np.sqrt(2)*stdAmplitude*erfinv(-float(i)/N)
+        if i!=0:
+            binLimits[N+i-1] = meanAmplitude + np.sqrt(2)*stdAmplitude*erfinv(float(i)/N)
 #
 # outBinary=[ ]
 # for i in range(len(amplitude)):
