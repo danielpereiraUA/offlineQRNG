@@ -1,0 +1,18 @@
+﻿  cephes.c
+  fft.c
+  matrix.c
+  testApp.c
+c:\users\danielfpereira\dropbox\university\cv-quantum\rng\randomnesstest\randomnesstest\randomnesstest\testapp.c(53): warning C4473: 'fscanf_s' : not enough arguments passed for format string
+  c:\users\danielfpereira\dropbox\university\cv-quantum\rng\randomnesstest\randomnesstest\randomnesstest\testapp.c(53): note: placeholders and their parameters expect 2 variadic arguments, but 1 were provided
+  c:\users\danielfpereira\dropbox\university\cv-quantum\rng\randomnesstest\randomnesstest\randomnesstest\testapp.c(53): note: the missing variadic argument 2 is required by format string '%c'
+  c:\users\danielfpereira\dropbox\university\cv-quantum\rng\randomnesstest\randomnesstest\randomnesstest\testapp.c(53): note: this argument is used as a buffer size
+c:\users\danielfpereira\dropbox\university\cv-quantum\rng\randomnesstest\randomnesstest\randomnesstest\testapp.c(64): warning C4293: '<<': shift count negative or too big, undefined behavior
+c:\users\danielfpereira\dropbox\university\cv-quantum\rng\randomnesstest\randomnesstest\randomnesstest\testapp.c(73): warning C4473: 'fscanf_s' : not enough arguments passed for format string
+  c:\users\danielfpereira\dropbox\university\cv-quantum\rng\randomnesstest\randomnesstest\randomnesstest\testapp.c(73): note: placeholders and their parameters expect 2 variadic arguments, but 1 were provided
+  c:\users\danielfpereira\dropbox\university\cv-quantum\rng\randomnesstest\randomnesstest\randomnesstest\testapp.c(73): note: the missing variadic argument 2 is required by format string '%c'
+  c:\users\danielfpereira\dropbox\university\cv-quantum\rng\randomnesstest\randomnesstest\randomnesstest\testapp.c(73): note: this argument is used as a buffer size
+c:\users\danielfpereira\dropbox\university\cv-quantum\rng\randomnesstest\randomnesstest\randomnesstest\testapp.c(161): warning C4101: 'i': unreferenced local variable
+  Generating code
+  All 9 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  randomnessTest.vcxproj -> C:\Users\danielfpereira\Dropbox\University\CV-Quantum\RNG\randomnessTest\randomnessTest\x64\Release\randomnessTest.exe
