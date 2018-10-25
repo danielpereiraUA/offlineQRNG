@@ -2,15 +2,28 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.special import erfinv
 import csv
+from scipy.stats.stats import pearsonr
 
-A = np.loadtxt(open("../csvData/dataTest.csv", "rb"), delimiter=",", skiprows=4)
+A = np.loadtxt(open("../csvData/polaIndTest2.csv", "rb"), delimiter=",", skiprows=4)
 time = A[:, 0]*1e-3        # converting to s
-amplitude = A[0:len(A):2, 1]*1e-3   # converting to V
+amplitude = A[0:len(A), 1]*1e-3   # converting to V
 meanAmplitude = np.mean(amplitude)
 stdAmplitude = np.std(amplitude)
 
-# Gray code generator
-nGray = 3
+N=100
+corr=np.zeros(N)
+for i in range(N):
+    corr[i]=np.corrcoef(amplitude[0:int(1e6)],amplitude[int(i):int(1e6+i)])[0, 1]
+
+# plt.figure()
+# plt.plot(corr)
+# plt.show()
+
+aux = amplitude[0:len(amplitude):30]
+amplitude = aux
+
+# # Gray code generator
+nGray = 2
 grayCode = ["0", "1"]
 aux1 = ["1", "0"]
 for i in range(nGray-1):
@@ -39,40 +52,15 @@ else:
         if i != 0:
             binLimits[N+i-1] = meanAmplitude + np.sqrt(2)*stdAmplitude*erfinv(float(i)/N)
 
-plt.figure()
-plt.plot(amplitude)
-plt.show()
+outBinary=[ ]
+for i in range(len(amplitude)):
+    aux=amplitude[i]<binLimits
+    outBinary.append(grayCode[len(grayCode)-sum(aux)-1])
 
+OutBinary=''.join(outBinary)
 #
-# outBinary=[ ]
-# for i in range(len(amplitude)):
-#     aux=amplitude[i]<binLimits
-#     outBinary.append(grayCode[len(grayCode)-sum(aux)-1])
-#
-# OutBinary=''.join(outBinary)
-# with open('out.txt','w') as outFile:
-#     print(OutBinary, file=outFile)
+# print(OutBinary[2:5])
 
-# print(outBinary)
-
-# for i=1:nGray-1
-#    a=strings(1,2^i);
-#    b=strings(1,2^i);
-#    for j=1:length(a)
-#        a(j)="0";
-#        b(j)="1";
-#    end
-#    aux=fliplr(grayCode);
-#    aux=join([b ; aux]')';
-#    grayCode=join([a ; grayCode]')';
-#    grayCode=[grayCode, aux]; %#ok<AGROW>
-# end
-# grayCode=char(grayCode);
-# clear aux a b
-# for i=1:2^nGray
-#    aux=grayCode(:,:,i);
-#    aux(aux==' ')=[];
-#    GrayCode(:,:,i)=aux;
-# end
-# grayCode=GrayCode;
-# clear GrayCode
+# this code outputs the generated binary
+with open('../randomnessTestSuite/randomnessTest/out.txt','w') as outFile:
+    print(OutBinary, file=outFile)
