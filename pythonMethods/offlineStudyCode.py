@@ -1,8 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.special import erfinv
-import csv
-from scipy.stats.stats import pearsonr
 
 A = np.loadtxt(open("../csvData/polaIndTest2.csv", "rb"), delimiter=",", skiprows=4)
 time = A[:, 0]*1e-3        # converting to s
@@ -10,10 +8,10 @@ amplitude = A[0:len(A), 1]*1e-3   # converting to V
 meanAmplitude = np.mean(amplitude)
 stdAmplitude = np.std(amplitude)
 
-N=100
-corr=np.zeros(N)
+N = 100
+corr = np.zeros(N)
 for i in range(N):
-    corr[i]=np.corrcoef(amplitude[0:int(1e6)],amplitude[int(i):int(1e6+i)])[0, 1]
+    corr[i] = np.corrcoef(amplitude[0:int(1e6)], amplitude[int(i):int(1e6+i)])[0, 1]
 
 # plt.figure()
 # plt.plot(corr)
@@ -52,15 +50,15 @@ else:
         if i != 0:
             binLimits[N+i-1] = meanAmplitude + np.sqrt(2)*stdAmplitude*erfinv(float(i)/N)
 
-outBinary=[ ]
+outBinary = []
 for i in range(len(amplitude)):
-    aux=amplitude[i]<binLimits
+    aux = amplitude[i] < binLimits
     outBinary.append(grayCode[len(grayCode)-sum(aux)-1])
 
-OutBinary=''.join(outBinary)
+OutBinary = ''.join(outBinary)
 #
 # print(OutBinary[2:5])
 
 # this code outputs the generated binary
-with open('../randomnessTestSuite/randomnessTest/out.txt','w') as outFile:
+with open('../randomnessTestSuite/randomnessTest/out.txt', 'w') as outFile:
     print(OutBinary, file=outFile)
