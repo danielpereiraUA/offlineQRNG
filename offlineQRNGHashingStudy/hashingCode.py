@@ -46,7 +46,7 @@ while i < L-8:
     aux = int(asciiByte, 2)
     ascii.append(aux.to_bytes((aux.bit_length() + 7) // 8, 'big').decode())
 
-hashingFactor = 1365
+hashingFactor = 11000
 preHashing = []
 aux = ''
 for i in range(len(ascii)):
@@ -61,7 +61,7 @@ M = []
 
 finalString = ''
 
-scale = 16 ## equals to hexadecimal
+scale = 16  # equals to hexadecimal
 num_of_bits = 8
 
 for i in range(len(preHashing)):
@@ -69,7 +69,7 @@ for i in range(len(preHashing)):
     M.append(hash.sha512(preHashing[i].encode()).hexdigest())
     finalString = finalString + bin(int(M[i], scale))[2:].zfill(num_of_bits)
 
-with open('finalOut.csv', 'w') as csvfile:
+with open('finalOutSmaller.csv', 'w') as csvfile:
     writer = csv.writer(csvfile, lineterminator='\n')
     writer.writerow([finalString])
 

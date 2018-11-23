@@ -13,8 +13,8 @@
 
 int FileExists(const char *filename);
 
-double Frequency(unsigned long int *binaryString, int size);
-double BlockFrequency(unsigned long int *binaryString, int size, int M);
+int Frequency(unsigned long int *binaryString, int size);
+int BlockFrequency(unsigned long int *binaryString, int size, int M);
 int Runs(unsigned long int *epsilon, int n);
 int LongestRunOfOnes(unsigned long int *epsilon, int n);
 int Rank(unsigned long int *epsilon, int n);
@@ -29,7 +29,7 @@ int ApproximateEntropy(unsigned long int *epsilon, int m, int n);
 double NonOverlappingTemplateMatchings(unsigned long int *epsilon, int m, int n);
 int OverlappingTemplateMatchings(unsigned long int *epsilon, int m, int n);
 
-#define buffer_size 416668
+#define buffer_size 579986
 
 int main() {
 	//int argc, char* argv[]) {
@@ -46,7 +46,7 @@ int main() {
 	errno_t err;
 
 	FILE *inFile;
-	err = fopen_s( &inFile, "out.txt", "r+");
+	err = fopen_s( &inFile, "finalOut.csv", "r+");
 	int i;
 	for (i = 0; i < buffer_size; i++)
 	{
@@ -58,8 +58,8 @@ int main() {
 
 	printf_s("hello! \n");
 
-	double freqResult = Frequency(ptr, buffer_size);
-	double freqBlockResult = BlockFrequency(ptr, buffer_size, 128);
+	int freqResult = Frequency(ptr, buffer_size);
+	int freqBlockResult = BlockFrequency(ptr, buffer_size, 128);
 	int runsResult = Runs(ptr, buffer_size);
 	int runOfOnesResult = LongestRunOfOnes(ptr, buffer_size);
 	int rankResult = Rank(ptr, buffer_size);
@@ -74,8 +74,8 @@ int main() {
 	double nonOverTempResult = NonOverlappingTemplateMatchings(ptr, 9, buffer_size);
 	int overTempResult = OverlappingTemplateMatchings(ptr, 9, buffer_size);
 
-	printf("Frequency test %lf \n", freqResult);
-	printf("Block frequency test %lf \n", freqBlockResult);
+	printf("Frequency test %i \n", freqResult);
+	printf("Block frequency test %i \n", freqBlockResult);
 	printf("Runs test %i \n", runsResult);
 	printf("Run Of Ones test %i \n", runOfOnesResult);
 	printf("Matrix rank test %i \n", rankResult);
@@ -195,7 +195,7 @@ int FileExists(const char *filename)
 						  F R E Q U E N C Y  T E S T        CORRECT
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-double Frequency(unsigned long int *epsilon, int n) {
+int Frequency(unsigned long int *epsilon, int n) {
 	double	f, s_obs, p_value, sum, sqrt2 = 1.41421356237309504880;
 
 	sum = 0.0;
@@ -222,14 +222,21 @@ double Frequency(unsigned long int *epsilon, int n) {
 	f = s_obs / sqrt2;
 	p_value = erfc(f);
 
-	return p_value;
+	if (p_value > 0.01)
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 					B L O C K  F R E Q U E N C Y  T E S T    CORRECT
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-double BlockFrequency(unsigned long int *binaryString, int size, int M) {
+int BlockFrequency(unsigned long int *binaryString, int size, int M) {
 	int		i, j, N, blockSum;
 	double	p_value, sum, pi, v, chi_squared;
 
@@ -263,7 +270,14 @@ double BlockFrequency(unsigned long int *binaryString, int size, int M) {
 	chi_squared = 4.0 * M * sum;
 	p_value = cephes_igamc( (double)N / 2.0, chi_squared / 2.0);
 
-	return p_value;
+	if (p_value > 0.01)
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
