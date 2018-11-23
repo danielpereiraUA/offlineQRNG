@@ -1,6 +1,6 @@
 import numpy as np
 import hashlib as hash
-
+import csv
 
 
 with open('out.csv') as f:
@@ -54,17 +54,25 @@ for i in range(len(ascii)):
     if len(aux) == hashingFactor:
         preHashing.append(aux)
         aux = ''
-        print(preHashing[0])
-        print(preHashing)
-        input()
 
 m = hash.sha512()
 
-print(preHashing[0])
-
 M = []
-for i in range(len(preHashing)):
-    M.append(hash.sha512(preHashing[i].encode()).hexdigest())
 
-print(M[0])
-print(preHashing[0])
+finalString = ''
+
+scale = 16 ## equals to hexadecimal
+num_of_bits = 8
+
+for i in range(len(preHashing)):
+    print(preHashing[i].encode())
+    M.append(hash.sha512(preHashing[i].encode()).hexdigest())
+    finalString = finalString + bin(int(M[i], scale))[2:].zfill(num_of_bits)
+
+with open('finalOut.csv', 'w') as csvfile:
+    writer = csv.writer(csvfile, lineterminator='\n')
+    writer.writerow([finalString])
+
+
+print(len(finalString))
+print(len(preHashing)*512)
